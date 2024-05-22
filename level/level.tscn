@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=3 uid="uid://q8660d1xc5jr"]
+
+[ext_resource type="Shader" path="res://level/level.gdshader" id="1_pt15l"]
+[ext_resource type="Script" path="res://material/reprojection.gd" id="2_rtdyb"]
+[ext_resource type="PackedScene" uid="uid://ci0gesw2py3fw" path="res://player/player.tscn" id="3_xsj02"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4qayn"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_4lqjp"]
+sky_material = SubResource("ProceduralSkyMaterial_4qayn")
+
+[sub_resource type="Environment" id="Environment_7m5ao"]
+background_mode = 4
+sky = SubResource("Sky_4lqjp")
+tonemap_mode = 3
+glow_intensity = 8.0
+adjustment_contrast = 2.15
+adjustment_saturation = 2.25
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_uw2ai"]
+auto_exposure_speed = 26.81
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_10own"]
+render_priority = 0
+shader = ExtResource("1_pt15l")
+shader_parameter/prevView = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_ptauw"]
+size = Vector2(2, 2)
+center_offset = Vector3(0, 0, -0.22)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7m5ao")
+camera_attributes = SubResource("CameraAttributesPractical_uw2ai")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_10own")
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_ptauw")
+script = ExtResource("2_rtdyb")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+visible = false
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.5, 3.5)
+size = Vector3(1, 5, 5)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 2.5, 3.5)
+size = Vector3(1, 5, 5)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.5, 3.5)
+size = Vector3(30, 1, 7)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5.5, 3.5)
+size = Vector3(30, 1, 7)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 15, 2.5, 6.5)
+size = Vector3(30, 1, 5)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 15, 2.5, 0.5)
+size = Vector3(30, 1, 5)
+
+[node name="player" parent="." instance=ExtResource("3_xsj02")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 4)

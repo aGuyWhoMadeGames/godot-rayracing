@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://duny50scveqxg"
+path="res://.godot/imported/texture.glsl-75701f9e1e0fa3c2bd50eb85ab505034.res"
+
+[deps]
+
+source_file="res://texture/texture.glsl"
+dest_files=["res://.godot/imported/texture.glsl-75701f9e1e0fa3c2bd50eb85ab505034.res"]
+
+[params]
+

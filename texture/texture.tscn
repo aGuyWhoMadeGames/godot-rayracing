@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://cvn4qavcoou0h"]
+
+[ext_resource type="Script" path="res://texture/texture.gd" id="1_e5u85"]
+
+[sub_resource type="Shader" id="Shader_mnwyc"]
+code = "shader_type spatial;
+render_mode unshaded, skip_vertex_transform, cull_disabled, depth_test_disabled;
+
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+
+void fragment() {
+	vec4 albedo_tex = texture(texture_albedo, SCREEN_UV);
+	ALBEDO = albedo_tex.rgb;
+}
+"
+
+[sub_resource type="Texture2DRD" id="Texture2DRD_31j18"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h3r3e"]
+render_priority = 0
+shader = SubResource("Shader_mnwyc")
+shader_parameter/texture_albedo = SubResource("Texture2DRD_31j18")
+
+[sub_resource type="QuadMesh" id="QuadMesh_2f07w"]
+center_offset = Vector3(0, 0, -0.1)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_e5u85")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_h3r3e")
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_2f07w")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.917315)
+projection = 1
+size = 2.0

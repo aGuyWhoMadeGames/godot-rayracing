@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://cna28plnk5anp"]
+
+[ext_resource type="Shader" path="res://material/modular.gdshader" id="1_qcu4d"]
+[ext_resource type="Script" path="res://material/reprojection.gd" id="2_7m46w"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4qayn"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_4lqjp"]
+sky_material = SubResource("ProceduralSkyMaterial_4qayn")
+
+[sub_resource type="Environment" id="Environment_7m5ao"]
+background_mode = 4
+sky = SubResource("Sky_4lqjp")
+tonemap_mode = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p47t3"]
+render_priority = 0
+shader = ExtResource("1_qcu4d")
+shader_parameter/prevView = null
+
+[sub_resource type="QuadMesh" id="QuadMesh_ptauw"]
+size = Vector2(2, 2)
+center_offset = Vector3(0, 0, -0.22)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7m5ao")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_p47t3")
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_ptauw")
+script = ExtResource("2_7m46w")
